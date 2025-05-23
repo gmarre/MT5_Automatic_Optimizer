@@ -1,58 +1,43 @@
 """
 Optimizer Module
 
-This module provides the Optimizer class which orchestrates the optimization process
-for Expert Advisors in MetaTrader 5.
+This module provides functionality to manage optimizations.
 """
 
 import os
+import sys
 import json
 import logging
-from datetime import datetime
-from .mt5_launcher import MT5Launcher
+import time
+from pathlib import Path
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("mt5_optimizer.log"),
-        logging.StreamHandler()
-    ]
-)
 logger = logging.getLogger("Optimizer")
 
 class Optimizer:
     """
-    Class to orchestrate the optimization process for Expert Advisors in MT5.
+    Class to manage optimizations.
     """
     
     def __init__(self, config_path):
         """
-        Initialize the Optimizer with a configuration file.
+        Initialize the optimizer.
         
         Args:
-            config_path (str): Path to the configuration JSON file
+            config_path (str): Path to the configuration file
         """
         self.config_path = config_path
         self.config = None
         self.mt5_launcher = None
         
         # Load configuration
-        self._load_config()
+        self.load_config()
         
-        # Initialize MT5 launcher
-        if self.config:
-            self.mt5_launcher = MT5Launcher(
-                self.config["mt5_path"],
-                self.config["output_directory"]
-            )
-        
-        logger.info("Optimizer initialized")
+        logger.info(f"Optimizer initialized with configuration from {config_path}")
     
-    def _load_config(self):
+    def load_config(self):
         """
-        Load the configuration from the JSON file.
+        Load configuration from file.
         
         Returns:
             bool: True if configuration was loaded successfully, False otherwise
@@ -61,218 +46,197 @@ class Optimizer:
             with open(self.config_path, "r") as f:
                 self.config = json.load(f)
             
+            # Initialize MT5 launcher
+            from optim.mt5_launcher import MT5Launcher
+            self.mt5_launcher = MT5Launcher(
+                self.config.get("mt5_path", "C:\\Program Files\\IC Trading (MU) MT5 Terminal\\terminal64.exe"),
+                self.config.get("output_directory", "results")
+            )
+            
             logger.info(f"Configuration loaded from {self.config_path}")
             return True
-            
         except Exception as e:
             logger.error(f"Error loading configuration: {str(e)}")
             return False
     
     def run_all_optimizations(self):
         """
-        Run all optimizations defined in the configuration.
+        Run all optimizations.
         
         Returns:
-            dict: Summary of optimization results
+            dict: Results of the optimizations
         """
-        if not self.config or not self.mt5_launcher:
-            logger.error("Configuration or MT5 launcher not initialized")
-            return {"status": "error", "message": "Configuration or MT5 launcher not initialized"}
-        
-        results = {
-            "start_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "robots": [],
-            "status": "success"
-        }
-        
         try:
-            # Iterate through each robot in the configuration
-            for robot in self.config["robots"]:
-                robot_results = {
-                    "name": robot["name"],
-                    "optimizations": []
-                }
-                
-                # Launch MT5 once per robot to avoid repeated launches
-                if not self.mt5_launcher.launch_mt5():
-                    logger.error(f"Failed to launch MT5 for robot {robot['name']}")
-                    robot_results["status"] = "error"
-                    robot_results["message"] = "Failed to launch MT5"
-                    results["robots"].append(robot_results)
-                    continue
-                
-                # Process each optimization for this robot
-                for optim in robot["optimizations"]:
-                    optim_results = {
-                        "symbol": optim["symbol"],
-                        "timeframe": optim["timeframe"],
-                        "periods": []
-                    }
-                    
-                    # Process each period for this optimization
-                    for period in optim["periods"]:
-                        period_result = {
-                            "name": period["name"],
-                            "type": period["type"],
-                            "from_date": period["from_date"],
-                            "to_date": period["to_date"]
-                        }
-                        
-                        # Run the optimization for this period
-                        success = self.mt5_launcher.run_optimization(
-                            robot_name=robot["name"],
-                            set_file=robot["set_file"],
-                            symbol=optim["symbol"],
-                            timeframe=optim["timeframe"],
-                            from_date=period["from_date"],
-                            to_date=period["to_date"],
-                            leverage=optim.get("leverage", 100),
-                            model=optim.get("model", 1),
-                            initial_deposit=optim.get("initial_deposit", 10000),
-                            optimization_type=optim.get("optimization_type", "genetic"),
-                            period_name=period["name"],
-                            period_type=period["type"]
-                        )
-                        
-                        period_result["status"] = "success" if success else "error"
-                        optim_results["periods"].append(period_result)
-                    
-                    robot_results["optimizations"].append(optim_results)
-                
-                # Close MT5 after processing all optimizations for this robot
-                self.mt5_launcher.close_mt5()
-                
-                results["robots"].append(robot_results)
+            # Check if configuration is loaded
+            if not self.config:
+                logger.error("Configuration not loaded")
+                return {"status": "error", "message": "Configuration not loaded"}
             
-            results["end_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            # Get robots
+            robots = self.config.get("robots", [])
+            if not robots:
+                logger.error("No robots found in configuration")
+                return {"status": "error", "message": "No robots found in configuration"}
             
-            # Save summary to file
-            summary_path = os.path.join(self.config["output_directory"], "optimization_summary.json")
-            with open(summary_path, "w") as f:
-                json.dump(results, f, indent=4)
+            # Run optimizations for each robot
+            results = []
+            for robot in robots:
+                robot_results = self.run_robot_optimization(robot["name"])
+                if robot_results["status"] == "error":
+                    return robot_results
+                results.append(robot_results)
             
-            logger.info(f"All optimizations completed. Summary saved to {summary_path}")
-            return results
-            
+            # Return results
+            return {
+                "status": "success",
+                "results": results
+            }
         except Exception as e:
-            logger.error(f"Error running optimizations: {str(e)}")
-            results["status"] = "error"
-            results["message"] = str(e)
-            return results
+            logger.error(f"Error running all optimizations: {str(e)}")
+            return {"status": "error", "message": str(e)}
     
-    def run_specific_optimization(self, robot_name, symbol=None, timeframe=None, period_name=None):
+    def run_robot_optimization(self, robot_name):
         """
-        Run a specific optimization based on filters.
+        Run optimization for a specific robot.
         
         Args:
-            robot_name (str): Name of the robot to optimize
-            symbol (str, optional): Symbol to filter by
-            timeframe (str, optional): Timeframe to filter by
-            period_name (str, optional): Period name to filter by
-            
+            robot_name (str): Name of the robot
+        
         Returns:
-            dict: Summary of optimization results
+            dict: Results of the optimization
         """
-        if not self.config or not self.mt5_launcher:
-            logger.error("Configuration or MT5 launcher not initialized")
-            return {"status": "error", "message": "Configuration or MT5 launcher not initialized"}
-        
-        results = {
-            "start_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "robot": robot_name,
-            "symbol": symbol,
-            "timeframe": timeframe,
-            "period": period_name,
-            "optimizations": [],
-            "status": "success"
-        }
-        
         try:
-            # Find the robot in the configuration
-            robot = next((r for r in self.config["robots"] if r["name"] == robot_name), None)
+            # Check if configuration is loaded
+            if not self.config:
+                logger.error("Configuration not loaded")
+                return {"status": "error", "message": "Configuration not loaded"}
+            
+            # Find the robot
+            robot = None
+            for r in self.config.get("robots", []):
+                if r["name"] == robot_name:
+                    robot = r
+                    break
+            
             if not robot:
                 logger.error(f"Robot {robot_name} not found in configuration")
-                results["status"] = "error"
-                results["message"] = f"Robot {robot_name} not found in configuration"
-                return results
+                return {"status": "error", "message": f"Robot {robot_name} not found in configuration"}
             
-            # Launch MT5
-            if not self.mt5_launcher.launch_mt5():
-                logger.error(f"Failed to launch MT5 for robot {robot_name}")
-                results["status"] = "error"
-                results["message"] = "Failed to launch MT5"
-                return results
+            # Get optimizations
+            optimizations = robot.get("optimizations", [])
+            if not optimizations:
+                logger.error(f"No optimizations found for robot {robot_name}")
+                return {"status": "error", "message": f"No optimizations found for robot {robot_name}"}
             
-            # Filter optimizations based on parameters
-            for optim in robot["optimizations"]:
-                if symbol and optim["symbol"] != symbol:
+            # Run optimizations for each symbol and timeframe
+            results = []
+            for optimization in optimizations:
+                symbol = optimization.get("symbol")
+                timeframe = optimization.get("timeframe")
+                
+                if not symbol or not timeframe:
+                    logger.error(f"Symbol or timeframe not specified for robot {robot_name}")
                     continue
-                if timeframe and optim["timeframe"] != timeframe:
-                    continue
                 
-                optim_result = {
-                    "symbol": optim["symbol"],
-                    "timeframe": optim["timeframe"],
-                    "periods": []
-                }
-                
-                # Filter periods based on parameters
-                for period in optim["periods"]:
-                    if period_name and period["name"] != period_name:
-                        continue
-                    
-                    period_result = {
-                        "name": period["name"],
-                        "type": period["type"],
-                        "from_date": period["from_date"],
-                        "to_date": period["to_date"]
-                    }
-                    
-                    # Run the optimization for this period
-                    success = self.mt5_launcher.run_optimization(
-                        robot_name=robot["name"],
-                        set_file=robot["set_file"],
-                        symbol=optim["symbol"],
-                        timeframe=optim["timeframe"],
-                        from_date=period["from_date"],
-                        to_date=period["to_date"],
-                        leverage=optim.get("leverage", 100),
-                        model=optim.get("model", 1),
-                        initial_deposit=optim.get("initial_deposit", 10000),
-                        optimization_type=optim.get("optimization_type", "genetic"),
-                        period_name=period["name"],
-                        period_type=period["type"]
-                    )
-                    
-                    period_result["status"] = "success" if success else "error"
-                    optim_result["periods"].append(period_result)
-                
-                if optim_result["periods"]:
-                    results["optimizations"].append(optim_result)
+                optimization_results = self.run_symbol_optimization(robot_name, symbol, timeframe)
+                if optimization_results["status"] == "error":
+                    return optimization_results
+                results.append(optimization_results)
             
-            # Close MT5
-            self.mt5_launcher.close_mt5()
-            
-            results["end_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            
-            if not results["optimizations"]:
-                logger.warning(f"No matching optimizations found for the specified filters")
-                results["status"] = "warning"
-                results["message"] = "No matching optimizations found for the specified filters"
-            else:
-                logger.info(f"Specific optimizations completed")
-            
-            return results
-            
+            # Return results
+            return {
+                "status": "success",
+                "robot_name": robot_name,
+                "results": results
+            }
         except Exception as e:
-            logger.error(f"Error running specific optimization: {str(e)}")
-            results["status"] = "error"
-            results["message"] = str(e)
-            return results
-
-
-# Example usage
-if __name__ == "__main__":
-    optimizer = Optimizer("../config/optimization_config.json")
-    results = optimizer.run_all_optimizations()
-    print(f"Optimization completed with status: {results['status']}")
+            logger.error(f"Error running optimization for robot {robot_name}: {str(e)}")
+            return {"status": "error", "message": str(e)}
+    
+    def run_symbol_optimization(self, robot_name, symbol, timeframe):
+        """
+        Run optimization for a specific robot, symbol, and timeframe.
+        
+        Args:
+            robot_name (str): Name of the robot
+            symbol (str): Symbol to optimize
+            timeframe (str): Timeframe to optimize
+        
+        Returns:
+            dict: Results of the optimization
+        """
+        try:
+            # Check if configuration is loaded
+            if not self.config:
+                logger.error("Configuration not loaded")
+                return {"status": "error", "message": "Configuration not loaded"}
+            
+            # Find the robot
+            robot = None
+            for r in self.config.get("robots", []):
+                if r["name"] == robot_name:
+                    robot = r
+                    break
+            
+            if not robot:
+                logger.error(f"Robot {robot_name} not found in configuration")
+                return {"status": "error", "message": f"Robot {robot_name} not found in configuration"}
+            
+            # Find the optimization
+            optimization = None
+            for o in robot.get("optimizations", []):
+                if o.get("symbol") == symbol and o.get("timeframe") == timeframe:
+                    optimization = o
+                    break
+            
+            if not optimization:
+                logger.error(f"Optimization for robot {robot_name}, symbol {symbol}, timeframe {timeframe} not found in configuration")
+                return {"status": "error", "message": f"Optimization for robot {robot_name}, symbol {symbol}, timeframe {timeframe} not found in configuration"}
+            
+            # Get periods
+            periods = optimization.get("periods", [])
+            if not periods:
+                logger.error(f"No periods found for robot {robot_name}, symbol {symbol}, timeframe {timeframe}")
+                return {"status": "error", "message": f"No periods found for robot {robot_name}, symbol {symbol}, timeframe {timeframe}"}
+            
+            # Run optimizations for each period
+            results = []
+            for period in periods:
+                period_name = period.get("name")
+                period_type = period.get("type")
+                from_date = period.get("from_date")
+                to_date = period.get("to_date")
+                
+                if not period_name or not period_type or not from_date or not to_date:
+                    logger.error(f"Period not properly specified for robot {robot_name}, symbol {symbol}, timeframe {timeframe}")
+                    continue
+                
+                # Run optimization
+                period_results = self.mt5_launcher.run_optimization(
+                    robot_name=robot_name,
+                    symbol=symbol,
+                    timeframe=timeframe,
+                    period=period,
+                    optimization_type=optimization.get("optimization_type", "genetic"),
+                    leverage=optimization.get("leverage", 500),
+                    model=optimization.get("model", 1),
+                    initial_deposit=optimization.get("initial_deposit", 10000),
+                    set_file=robot.get("set_file")
+                )
+                
+                if period_results["status"] == "error":
+                    return period_results
+                
+                results.append(period_results)
+            
+            # Return results
+            return {
+                "status": "success",
+                "robot_name": robot_name,
+                "symbol": symbol,
+                "timeframe": timeframe,
+                "results": results
+            }
+        except Exception as e:
+            logger.error(f"Error running optimization for robot {robot_name}, symbol {symbol}, timeframe {timeframe}: {str(e)}")
+            return {"status": "error", "message": str(e)}

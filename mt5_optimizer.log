@@ -1,0 +1,248 @@
+2025-05-23 21:04:08,009 - matplotlib.font_manager - WARNING - Matplotlib is building the font cache; this may take a moment.
+2025-05-23 21:04:10,810 - matplotlib.font_manager - INFO - generated new fontManager
+2025-05-23 21:04:12,846 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 21:18:49,076 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 21:18:52,920 - GUI - ERROR - Error loading robots from configuration: 'MT5OptimizerGUI' object has no attribute 'analysis_robot_combo'
+2025-05-23 21:18:52,920 - Main - ERROR - Error running GUI: 'MT5OptimizerGUI' object has no attribute 'status_var'
+2025-05-23 21:22:01,854 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 21:22:04,773 - GUI - ERROR - Error loading robots from configuration: 'MT5OptimizerGUI' object has no attribute 'analysis_robot_combo'
+2025-05-23 21:22:04,774 - Main - ERROR - Error running GUI: 'MT5OptimizerGUI' object has no attribute 'status_var'
+2025-05-23 21:28:20,317 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 21:28:43,331 - GUI - ERROR - Error loading robots from configuration: 'NoneType' object does not support item assignment
+2025-05-23 21:28:43,420 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 21:28:43,423 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 21:28:43,423 - Optimizer - INFO - Configuration loaded from config/optimization_config.json
+2025-05-23 21:28:43,424 - Optimizer - INFO - Optimizer initialized with configuration from config/optimization_config.json
+2025-05-23 21:28:43,424 - ResultsParser - INFO - Results Parser initialized with results directory: results
+2025-05-23 21:28:43,424 - Analyzer - INFO - Analyzer initialized with results directory: results
+2025-05-23 21:28:43,424 - GUI - INFO - Components initialized
+2025-05-23 21:28:43,424 - GUI - INFO - GUI initialized
+2025-05-23 21:41:36,885 - MT5Launcher - INFO - MT5 is already running
+2025-05-23 21:41:36,886 - GUI - INFO - MT5 launched successfully
+2025-05-23 21:41:50,505 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 21:41:55,550 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 21:41:55,550 - GUI - INFO - MT5 launched successfully
+2025-05-23 21:42:19,986 - MT5Launcher - INFO - Closing MT5
+2025-05-23 21:42:19,999 - MT5Launcher - INFO - Terminating MT5 process with PID 10520
+2025-05-23 21:42:25,018 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 21:42:25,019 - GUI - INFO - MT5 closed successfully
+2025-05-23 21:46:18,761 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 21:46:23,785 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 21:46:23,785 - GUI - INFO - MT5 launched successfully
+2025-05-23 21:57:53,311 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 21:57:53,312 - Optimizer - INFO - Configuration loaded from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config.json
+2025-05-23 21:57:53,315 - Optimizer - INFO - Optimizer initialized with configuration from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config.json
+2025-05-23 21:57:53,325 - GUI - INFO - Loaded 2 robots from configuration
+2025-05-23 21:58:04,259 - GUI - INFO - Loaded 3 symbols for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5
+2025-05-23 21:58:08,196 - GUI - INFO - Loaded 1 timeframes for symbol AUDCAD
+2025-05-23 21:58:23,961 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (backtest)
+2025-05-23 21:58:28,990 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (forwardtest)
+2025-05-23 21:58:34,002 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (backtest)
+2025-05-23 21:58:39,023 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (forwardtest)
+2025-05-23 21:58:44,056 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (backtest)
+2025-05-23 21:58:49,088 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (forwardtest)
+2025-05-23 21:58:54,126 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol GBPUSD, timeframe H1, period shortterm (backtest)
+2025-05-23 21:58:59,144 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol EURUSD, timeframe H1, period shortterm (backtest)
+2025-05-23 21:59:04,163 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol EURUSD, timeframe H1, period shortterm (forwardtest)
+2025-05-23 21:59:09,182 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol EURUSD, timeframe H1, period longterm (backtest)
+2025-05-23 21:59:14,199 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol EURUSD, timeframe H1, period longterm (forwardtest)
+2025-05-23 21:59:19,218 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol USDJPY, timeframe H1, period shortterm (backtest)
+2025-05-23 21:59:24,237 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol USDJPY, timeframe H1, period shortterm (forwardtest)
+2025-05-23 21:59:29,259 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol USDJPY, timeframe H1, period longterm (backtest)
+2025-05-23 21:59:34,274 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB Ichimoku-Bot.ex5, symbol USDJPY, timeframe H1, period longterm (forwardtest)
+2025-05-23 22:00:20,152 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:00:20,167 - MT5Launcher - INFO - Terminating MT5 process with PID 10280
+2025-05-23 22:00:25,214 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:00:25,215 - GUI - INFO - MT5 closed successfully
+2025-05-23 22:00:36,389 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:00:36,407 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:00:41,448 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:00:41,455 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (backtest)
+2025-05-23 22:00:46,477 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (forwardtest)
+2025-05-23 22:00:51,494 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (backtest)
+2025-05-23 22:00:56,509 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (forwardtest)
+2025-05-23 22:01:01,542 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (backtest)
+2025-05-23 22:01:06,564 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (forwardtest)
+2025-05-23 22:01:11,583 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol GBPUSD, timeframe H1, period shortterm (backtest)
+2025-05-23 22:19:34,274 - Main - INFO - MT5 Automatic Optimizer GUI closed
+2025-05-23 22:19:42,966 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 22:19:50,278 - GUI - ERROR - Error loading robots from configuration: 'NoneType' object does not support item assignment
+2025-05-23 22:19:50,343 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:19:50,345 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:19:50,345 - Optimizer - INFO - Configuration loaded from config/optimization_config.json
+2025-05-23 22:19:50,346 - Optimizer - INFO - Optimizer initialized with configuration from config/optimization_config.json
+2025-05-23 22:19:50,348 - ResultsParser - INFO - Results Parser initialized with results directory: results
+2025-05-23 22:19:50,349 - Analyzer - INFO - Analyzer initialized with results directory: results
+2025-05-23 22:19:50,349 - GUI - INFO - Components initialized
+2025-05-23 22:19:50,350 - GUI - INFO - GUI initialized
+2025-05-23 22:20:12,000 - GUI - INFO - Loaded 3 symbols for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5
+2025-05-23 22:20:13,977 - GUI - INFO - Loaded 1 timeframes for symbol AUDCAD
+2025-05-23 22:20:22,959 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:20:22,970 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:20:28,007 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:20:28,090 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 22:20:28,106 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:20:28,120 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:20:28,134 - MT5Launcher - INFO - Terminating MT5 process with PID 8900
+2025-05-23 22:20:33,154 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:20:35,157 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (backtest)
+2025-05-23 22:20:35,157 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 22:20:45,185 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:21:45,197 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:21:45,209 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:21:45,225 - MT5Launcher - INFO - Terminating MT5 process with PID 9684
+2025-05-23 22:21:50,240 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:21:50,252 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest
+2025-05-23 22:21:50,274 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:21:50,298 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:21:55,322 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:21:55,376 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_forwardtest\optimization.ini
+2025-05-23 22:21:55,386 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:21:55,398 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:21:55,475 - MT5Launcher - INFO - Terminating MT5 process with PID 2396
+2025-05-23 22:22:00,528 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:22:02,529 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (forwardtest)
+2025-05-23 22:22:02,529 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_forwardtest\optimization.ini
+2025-05-23 22:22:12,552 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:23:12,571 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:23:12,591 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:23:12,628 - MT5Launcher - INFO - Terminating MT5 process with PID 23412
+2025-05-23 22:23:17,650 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:23:17,654 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_forwardtest
+2025-05-23 22:23:17,671 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:23:17,693 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:23:22,722 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:23:22,746 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_backtest\optimization.ini
+2025-05-23 22:23:22,757 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:23:22,768 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:23:22,781 - MT5Launcher - INFO - Terminating MT5 process with PID 6576
+2025-05-23 22:23:27,801 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:23:29,802 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (backtest)
+2025-05-23 22:23:29,802 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_backtest\optimization.ini
+2025-05-23 22:23:39,825 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:24:39,845 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:24:39,864 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:24:39,889 - MT5Launcher - INFO - Terminating MT5 process with PID 9476
+2025-05-23 22:24:44,924 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:24:44,931 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_backtest
+2025-05-23 22:24:44,946 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:24:44,963 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:24:49,988 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:24:50,034 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_forwardtest\optimization.ini
+2025-05-23 22:24:50,049 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:24:50,067 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:24:50,082 - MT5Launcher - INFO - Terminating MT5 process with PID 23624
+2025-05-23 22:24:55,106 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:24:57,108 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period longterm (forwardtest)
+2025-05-23 22:24:57,108 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_forwardtest\optimization.ini
+2025-05-23 22:25:07,122 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:26:07,138 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:26:07,154 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:26:07,170 - MT5Launcher - INFO - Terminating MT5 process with PID 22732
+2025-05-23 22:26:12,200 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:26:12,204 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_longterm_forwardtest
+2025-05-23 22:26:12,220 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:26:12,239 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:26:17,263 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:26:17,301 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_backtest\optimization.ini
+2025-05-23 22:26:17,317 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:26:17,331 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:26:17,343 - MT5Launcher - INFO - Terminating MT5 process with PID 8496
+2025-05-23 22:26:22,362 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:26:24,363 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (backtest)
+2025-05-23 22:26:24,364 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_backtest\optimization.ini
+2025-05-23 22:26:34,378 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:27:34,400 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:27:34,431 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:27:34,459 - MT5Launcher - INFO - Terminating MT5 process with PID 23872
+2025-05-23 22:27:39,475 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:27:39,479 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_backtest
+2025-05-23 22:27:39,496 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:27:39,515 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:27:44,538 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:27:44,559 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_forwardtest\optimization.ini
+2025-05-23 22:27:44,572 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:27:44,584 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:27:44,597 - MT5Launcher - INFO - Terminating MT5 process with PID 20704
+2025-05-23 22:27:49,616 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:27:51,617 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol EURUSD, timeframe H4, period shortterm (forwardtest)
+2025-05-23 22:27:51,617 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_forwardtest\optimization.ini
+2025-05-23 22:28:01,630 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:29:01,651 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:29:01,670 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:29:01,693 - MT5Launcher - INFO - Terminating MT5 process with PID 24244
+2025-05-23 22:29:06,714 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:29:06,718 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_EURUSD_H4_shortterm_forwardtest
+2025-05-23 22:29:06,735 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 22:29:06,754 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 22:29:11,781 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 22:29:11,815 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_GBPUSD_H1_shortterm_backtest\optimization.ini
+2025-05-23 22:29:11,835 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 22:29:11,853 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:29:11,905 - MT5Launcher - INFO - Terminating MT5 process with PID 22968
+2025-05-23 22:29:16,925 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:29:18,927 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol GBPUSD, timeframe H1, period shortterm (backtest)
+2025-05-23 22:29:18,930 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_GBPUSD_H1_shortterm_backtest\optimization.ini
+2025-05-23 22:29:28,943 - MT5Launcher - INFO - Waiting 60 seconds for optimization to complete...
+2025-05-23 22:30:28,957 - MT5Launcher - INFO - Closing MT5 after optimization
+2025-05-23 22:30:28,975 - MT5Launcher - INFO - Closing MT5
+2025-05-23 22:30:28,994 - MT5Launcher - INFO - Terminating MT5 process with PID 16400
+2025-05-23 22:30:34,012 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 22:30:34,015 - MT5Launcher - WARNING - No results files found in results_AUDCAD_H1_BARCELONE\REB RSI-Break_GBPUSD_H1_shortterm_backtest
+2025-05-23 23:23:15,491 - Main - INFO - MT5 Automatic Optimizer GUI closed
+2025-05-23 23:24:18,736 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 23:24:38,739 - GUI - ERROR - Error loading robots from configuration: 'NoneType' object does not support item assignment
+2025-05-23 23:24:38,795 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:24:38,796 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:24:38,797 - Optimizer - INFO - Configuration loaded from config/optimization_config.json
+2025-05-23 23:24:38,798 - Optimizer - INFO - Optimizer initialized with configuration from config/optimization_config.json
+2025-05-23 23:24:38,799 - ResultsParser - INFO - Results Parser initialized with results directory: results
+2025-05-23 23:24:38,799 - Analyzer - INFO - Analyzer initialized with results directory: results
+2025-05-23 23:24:38,800 - GUI - INFO - Components initialized
+2025-05-23 23:24:38,800 - GUI - INFO - GUI initialized
+2025-05-23 23:27:06,595 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:27:06,596 - Optimizer - INFO - Configuration loaded from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config_RSI_Break_AUDCAD_H1.json
+2025-05-23 23:27:06,596 - Optimizer - INFO - Optimizer initialized with configuration from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config_RSI_Break_AUDCAD_H1.json
+2025-05-23 23:27:06,597 - GUI - INFO - Loaded 1 robots from configuration
+2025-05-23 23:27:08,460 - GUI - INFO - Loaded 1 symbols for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5
+2025-05-23 23:27:10,161 - GUI - INFO - Loaded 1 timeframes for symbol AUDCAD
+2025-05-23 23:27:20,912 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 23:27:20,924 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:27:25,963 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 23:27:25,996 - INIGenerator - INFO - Parsed 97 parameters from C:\Users\MARRE\Desktop\Reussir-en-bourse\Robots\REB-RSI Break\Fichiers De Parametrage Paul\AUDCAD_H1_optim.set
+2025-05-23 23:27:26,005 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 23:27:26,020 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 23:27:26,033 - MT5Launcher - INFO - Closing MT5
+2025-05-23 23:27:26,046 - MT5Launcher - INFO - Terminating MT5 process with PID 25364
+2025-05-23 23:27:31,058 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 23:27:33,060 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (backtest)
+2025-05-23 23:27:33,060 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 23:27:43,081 - MT5Launcher - INFO - Waiting 300 seconds for optimization to complete...
+2025-05-23 23:41:49,512 - Main - INFO - Starting MT5 Automatic Optimizer GUI
+2025-05-23 23:41:57,112 - GUI - ERROR - Error loading robots from configuration: 'NoneType' object does not support item assignment
+2025-05-23 23:41:57,169 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:41:57,171 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:41:57,172 - Optimizer - INFO - Configuration loaded from config/optimization_config.json
+2025-05-23 23:41:57,172 - Optimizer - INFO - Optimizer initialized with configuration from config/optimization_config.json
+2025-05-23 23:41:57,172 - ResultsParser - INFO - Results Parser initialized with results directory: results
+2025-05-23 23:41:57,174 - Analyzer - INFO - Analyzer initialized with results directory: results
+2025-05-23 23:41:57,174 - GUI - INFO - Components initialized
+2025-05-23 23:41:57,174 - GUI - INFO - GUI initialized
+2025-05-23 23:42:08,341 - MT5Launcher - INFO - MT5 Launcher initialized with MT5 path: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:42:08,341 - Optimizer - INFO - Configuration loaded from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config_RSI_Break_AUDCAD_H1.json
+2025-05-23 23:42:08,342 - Optimizer - INFO - Optimizer initialized with configuration from C:/Users/MARRE/Desktop/Reussir-en-bourse/MT5_Automatic_Optimizer/config/optimization_config_RSI_Break_AUDCAD_H1.json
+2025-05-23 23:42:08,343 - GUI - INFO - Loaded 1 robots from configuration
+2025-05-23 23:42:09,453 - GUI - INFO - Loaded 1 symbols for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5
+2025-05-23 23:42:11,060 - GUI - INFO - Loaded 1 timeframes for symbol AUDCAD
+2025-05-23 23:42:18,694 - MT5Launcher - INFO - MT5 is not running, launching it
+2025-05-23 23:42:18,707 - MT5Launcher - INFO - Launching MT5 from C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe
+2025-05-23 23:42:23,748 - MT5Launcher - INFO - MT5 launched successfully
+2025-05-23 23:42:23,762 - INIGenerator - INFO - Generated optimization .ini file at results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 23:42:23,778 - MT5Launcher - INFO - Closing MT5 before launching optimization
+2025-05-23 23:42:23,792 - MT5Launcher - INFO - Closing MT5
+2025-05-23 23:42:23,805 - MT5Launcher - INFO - Terminating MT5 process with PID 27424
+2025-05-23 23:42:28,818 - MT5Launcher - INFO - MT5 closed successfully
+2025-05-23 23:42:30,820 - MT5Launcher - INFO - Running optimization for robot C:\Users\MARRE\AppData\Roaming\MetaQuotes\Terminal\6F6BCEE8A3D5ADA99D9E5E615679D93C\MQL5\Experts\REB RSI-Break.ex5, symbol AUDCAD, timeframe H1, period shortterm (backtest)
+2025-05-23 23:42:30,820 - MT5Launcher - INFO - Command: C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe /config:results_AUDCAD_H1_BARCELONE\REB RSI-Break_AUDCAD_H1_shortterm_backtest\optimization.ini
+2025-05-23 23:42:40,831 - MT5Launcher - INFO - Waiting 300 seconds for optimization to complete...
+2025-05-23 23:46:36,558 - Main - INFO - MT5 Automatic Optimizer GUI closed

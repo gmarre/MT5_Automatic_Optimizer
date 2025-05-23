@@ -9,10 +9,10 @@ Tous les cas seront alors enregistrés dans un dossier pour chaque période (en 
 
 On fera alors un deuxieme algorithme pour post traiter les resultats. Il faudra ainsi trouver tous les passages avec des combinaisons interessantes. Il faudra analyser pourquoi ces combinaisons sont interessantes avec par exemple la volonté d'avoir toujours un DD max inferieur à 25%, des durées de positions maximale et moyenne pour chaque timeframe et passage, des objectifs de rendements par mois, des graphiques permettant de voir l'importance de tel ou tel paramètre. 
 
-En + pq pas une interface IA me permettant de donner des caractéristiques de robots et des objectifs de résultats pour générer automatiquement des robots et de l'analyser
-En ++ Faire une interface qui prend en entrée un robot et qui automatiquement prend un robot sur MQL4 et l'analyse avec pleins de générations et nous permet de générer automatiquement une documentation claire sur le robot.
+En + pq pas une interface IA me permettant de donner des caractéristiques de robots et des objectifs de résultats pour générer automatiquement des robots et de l'analyser (à faire plus tard)
+En ++ Faire une interface qui prend en entrée un robot et qui automatiquement prend un robot sur MQL4 et l'analyse avec pleins de générations et nous permet de générer automatiquement une documentation claire sur le robot. (à faire plus tard)
 
-mt5_optimizer/
+mt5_automatic_optimizer/
 │
 ├── config/
 │   └── optimization_config.json     # Paramètres pour les runs (robots, symboles, .set, périodes, etc.)

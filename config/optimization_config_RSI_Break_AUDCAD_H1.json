@@ -1,0 +1,35 @@
+{
+    "mt5_path": "C:\\Program Files\\IC Trading (MU) MT5 Terminal\\terminal64.exe",
+    "output_directory": "results_AUDCAD_H1_BARCELONE",
+    "robots": [
+      {
+        "name": "C:\\Users\\MARRE\\AppData\\Roaming\\MetaQuotes\\Terminal\\6F6BCEE8A3D5ADA99D9E5E615679D93C\\MQL5\\Experts\\REB RSI-Break.ex5",
+        "set_file": "C:\\Users\\MARRE\\Desktop\\Reussir-en-bourse\\Robots\\REB-RSI Break\\Fichiers De Parametrage Paul\\AUDCAD_H1_optim.set",
+        "optimizations": [
+          {
+            "symbol": "AUDCAD",
+            "timeframe": "H1",
+            "leverage": 500,
+            "model": 2,
+            "initial_deposit": 5000,
+            "optimization_type": 2,
+            "periods": [
+              {
+                "name": "shortterm",
+                "type": "backtest",
+                "from_date": "2023.01.01",
+                "to_date": "2023.06.30"
+              },
+              {
+                "name": "longterm",
+                "type": "backtest",
+                "from_date": "2020.01.01",
+                "to_date": "2022.12.31"
+              }
+            ]
+          }   
+        ]
+      }
+    ]
+  }
+  

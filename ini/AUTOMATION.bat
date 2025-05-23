@@ -1,0 +1,2 @@
+"C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe" /config:"C:\Users\MARRE\Desktop\Reussir-en-bourse\MT5_Automatic_Optimizer\ini\BARCELONE_AUDCAD_RSI_H1_15042014_30012025.ini"
+"C:\Program Files\IC Trading (MU) MT5 Terminal\terminal64.exe" /config:"C:\Users\MARRE\Desktop\Reussir-en-bourse\MT5_Automatic_Optimizer\ini\TEST_EURUSD_ICHIMOKU_M15_15042014_30012025.ini"

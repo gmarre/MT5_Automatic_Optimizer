@@ -1,8 +1,7 @@
 """
-MT5 Automatic Optimizer
+Main Module for MT5 Automatic Optimizer
 
-Main orchestrator script for automating MetaTrader 5 optimization processes.
-This script coordinates the optimization and analysis of Expert Advisors in MT5.
+This module provides the main entry point for the MT5 Automatic Optimizer.
 """
 
 import os
@@ -10,12 +9,8 @@ import sys
 import json
 import logging
 import argparse
-from datetime import datetime
+import tkinter as tk
 from pathlib import Path
-
-from optim.optimizer import Optimizer
-from analysis.results_parser import ResultsParser
-from analysis.analyzer import Analyzer
 
 # Configure logging
 logging.basicConfig(
@@ -28,184 +23,207 @@ logging.basicConfig(
 )
 logger = logging.getLogger("Main")
 
-def parse_arguments():
+def run_gui():
     """
-    Parse command-line arguments.
-    
-    Returns:
-        argparse.Namespace: Parsed arguments
+    Run the GUI.
     """
-    parser = argparse.ArgumentParser(description="MT5 Automatic Optimizer")
-    
-    # Main operation mode
-    parser.add_argument("--mode", choices=["optimize", "analyze", "both"], default="both",
-                      help="Operation mode: optimize, analyze, or both (default)")
-    
-    # Configuration
-    parser.add_argument("--config", default="config/optimization_config.json",
-                      help="Path to configuration file (default: config/optimization_config.json)")
-    
-    # Filtering options
-    parser.add_argument("--robot", help="Filter by robot name")
-    parser.add_argument("--symbol", help="Filter by symbol")
-    parser.add_argument("--timeframe", help="Filter by timeframe")
-    parser.add_argument("--period", help="Filter by period name")
-    
-    # Output options
-    parser.add_argument("--output-dir", default="results",
-                      help="Directory to store results (default: results)")
-    parser.add_argument("--report", action="store_true",
-                      help="Generate HTML report after analysis")
-    
-    return parser.parse_args()
+    try:
+        logger.info("Starting MT5 Automatic Optimizer GUI")
+        
+        # Import GUI module
+        from gui import MT5OptimizerGUI
+        
+        # Create the root window
+        root = tk.Tk()
+        
+        # Create the GUI
+        gui = MT5OptimizerGUI(root)
+        
+        # Run the main loop
+        root.mainloop()
+        
+        logger.info("MT5 Automatic Optimizer GUI closed")
+    except Exception as e:
+        logger.error(f"Error running GUI: {str(e)}")
+        print(f"Error running GUI: {str(e)}")
+        sys.exit(1)
 
-def run_optimization(config_path, robot_name=None, symbol=None, timeframe=None, period_name=None):
+def run_cli(args):
     """
-    Run optimization process based on configuration.
+    Run the CLI.
     
     Args:
-        config_path (str): Path to configuration file
-        robot_name (str, optional): Filter by robot name
-        symbol (str, optional): Filter by symbol
-        timeframe (str, optional): Filter by timeframe
-        period_name (str, optional): Filter by period name
-        
-    Returns:
-        dict: Summary of optimization results
+        args (argparse.Namespace): Command line arguments
     """
-    logger.info("Starting optimization process")
-    
     try:
-        # Initialize optimizer
-        optimizer = Optimizer(config_path)
+        logger.info("Starting MT5 Automatic Optimizer CLI")
         
-        # Run optimization
-        if robot_name:
-            logger.info(f"Running specific optimization for robot: {robot_name}")
-            results = optimizer.run_specific_optimization(
-                robot_name=robot_name,
-                symbol=symbol,
-                timeframe=timeframe,
-                period_name=period_name
-            )
-        else:
+        # Import optimizer module
+        from optim.optimizer import Optimizer
+        
+        # Create the optimizer
+        optimizer = Optimizer(args.config)
+        
+        # Run optimizations
+        if args.mode == "all":
+            # Run all optimizations
             logger.info("Running all optimizations")
             results = optimizer.run_all_optimizations()
+            
+            if results["status"] == "success":
+                logger.info("All optimizations completed successfully")
+                print("All optimizations completed successfully")
+            else:
+                logger.error(f"Optimizations failed: {results.get('message', 'Unknown error')}")
+                print(f"Optimizations failed: {results.get('message', 'Unknown error')}")
+                sys.exit(1)
         
-        logger.info(f"Optimization completed with status: {results['status']}")
-        return results
+        elif args.mode == "robot":
+            # Run robot optimization
+            if not args.robot:
+                logger.error("--robot is required for robot mode")
+                print("--robot is required for robot mode")
+                sys.exit(1)
+            
+            logger.info(f"Running optimization for robot {args.robot}")
+            results = optimizer.run_robot_optimization(args.robot)
+            
+            if results["status"] == "success":
+                logger.info(f"Optimization for robot {args.robot} completed successfully")
+                print(f"Optimization for robot {args.robot} completed successfully")
+            else:
+                logger.error(f"Optimization failed: {results.get('message', 'Unknown error')}")
+                print(f"Optimization failed: {results.get('message', 'Unknown error')}")
+                sys.exit(1)
         
+        elif args.mode == "symbol":
+            # Run symbol optimization
+            if not args.robot or not args.symbol or not args.timeframe:
+                logger.error("--robot, --symbol, and --timeframe are required for symbol mode")
+                print("--robot, --symbol, and --timeframe are required for symbol mode")
+                sys.exit(1)
+            
+            logger.info(f"Running optimization for robot {args.robot}, symbol {args.symbol}, timeframe {args.timeframe}")
+            results = optimizer.run_symbol_optimization(args.robot, args.symbol, args.timeframe)
+            
+            if results["status"] == "success":
+                logger.info(f"Optimization for robot {args.robot}, symbol {args.symbol}, timeframe {args.timeframe} completed successfully")
+                print(f"Optimization for robot {args.robot}, symbol {args.symbol}, timeframe {args.timeframe} completed successfully")
+            else:
+                logger.error(f"Optimization failed: {results.get('message', 'Unknown error')}")
+                print(f"Optimization failed: {results.get('message', 'Unknown error')}")
+                sys.exit(1)
+        
+        logger.info("MT5 Automatic Optimizer CLI completed")
     except Exception as e:
-        logger.error(f"Error in optimization process: {str(e)}")
-        return {"status": "error", "message": str(e)}
+        logger.error(f"Error running CLI: {str(e)}")
+        print(f"Error running CLI: {str(e)}")
+        sys.exit(1)
 
-def run_analysis(config_path, output_dir, robot_name=None, symbol=None, timeframe=None, period_name=None, generate_report=False):
+def run_analysis(args):
     """
-    Run analysis process on optimization results.
+    Run the analysis.
     
     Args:
-        config_path (str): Path to configuration file
-        output_dir (str): Directory to store analysis outputs
-        robot_name (str, optional): Filter by robot name
-        symbol (str, optional): Filter by symbol
-        timeframe (str, optional): Filter by timeframe
-        period_name (str, optional): Filter by period name
-        generate_report (bool): Whether to generate HTML report
-        
-    Returns:
-        dict: Analysis results
+        args (argparse.Namespace): Command line arguments
     """
-    logger.info("Starting analysis process")
-    
     try:
-        # Load criteria from config
-        with open(config_path, "r") as f:
-            config = json.load(f)
+        logger.info("Starting MT5 Automatic Optimizer Analysis")
         
-        criteria = config.get("analysis_criteria", None)
+        # Import analyzer module
+        from analysis.analyzer import Analyzer
         
-        # Initialize analyzer
-        analyzer = Analyzer(output_dir, os.path.join(output_dir, "analysis"))
+        # Create the analyzer
+        analyzer = Analyzer(args.results_dir)
+        
+        # Create criteria
+        criteria = {
+            "max_drawdown": args.max_drawdown,
+            "min_profit_factor": args.min_profit_factor,
+            "min_expected_payoff": args.min_expected_payoff,
+            "min_recovery_factor": args.min_recovery_factor,
+            "min_trades": args.min_trades,
+            "max_consecutive_losses": args.max_consecutive_losses,
+            "min_win_rate": args.min_win_rate
+        }
         
         # Run analysis
-        results = analyzer.analyze_results(
-            robot_name=robot_name,
-            symbol=symbol,
-            timeframe=timeframe,
-            period_name=period_name,
-            criteria=criteria
-        )
+        if args.action == "analyze":
+            # Analyze results
+            logger.info(f"Analyzing results for robot {args.robot}, symbol {args.symbol}, timeframe {args.timeframe}, period {args.period_name} ({args.period_type})")
+            results = analyzer.analyze_results(args.robot, args.symbol, args.timeframe, args.period_name, args.period_type, criteria)
+            
+            if results["status"] == "success":
+                logger.info(f"Analysis completed successfully")
+                print(f"Analysis completed successfully")
+                print(f"Total passes: {results['total_passes']}")
+                print(f"Filtered passes: {results['filtered_passes']}")
+                print(f"Charts generated in: {results['charts_dir']}")
+            else:
+                logger.error(f"Analysis failed: {results.get('message', 'Unknown error')}")
+                print(f"Analysis failed: {results.get('message', 'Unknown error')}")
+                sys.exit(1)
         
-        # Generate report if requested
-        if generate_report and results["status"] == "success":
-            report_path = analyzer.generate_report(results)
-            if report_path:
-                logger.info(f"Analysis report generated: {report_path}")
-                results["report_path"] = report_path
+        elif args.action == "report":
+            # Generate report
+            logger.info(f"Generating report for robot {args.robot}, symbol {args.symbol}, timeframe {args.timeframe}, period {args.period_name} ({args.period_type})")
+            results = analyzer.generate_report(args.robot, args.symbol, args.timeframe, args.period_name, args.period_type, criteria)
+            
+            if results["status"] == "success":
+                logger.info(f"Report generated successfully at {results['report_file']}")
+                print(f"Report generated successfully at {results['report_file']}")
+            else:
+                logger.error(f"Report generation failed: {results.get('message', 'Unknown error')}")
+                print(f"Report generation failed: {results.get('message', 'Unknown error')}")
+                sys.exit(1)
         
-        logger.info(f"Analysis completed with status: {results['status']}")
-        return results
-        
+        logger.info("MT5 Automatic Optimizer Analysis completed")
     except Exception as e:
-        logger.error(f"Error in analysis process: {str(e)}")
-        return {"status": "error", "message": str(e)}
+        logger.error(f"Error running analysis: {str(e)}")
+        print(f"Error running analysis: {str(e)}")
+        sys.exit(1)
 
 def main():
     """
-    Main function to orchestrate the optimization and analysis processes.
+    Main entry point.
     """
-    # Parse command-line arguments
-    args = parse_arguments()
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="MT5 Automatic Optimizer")
     
-    # Record start time
-    start_time = datetime.now()
-    logger.info(f"MT5 Automatic Optimizer started at {start_time}")
+    # Add arguments
+    parser.add_argument("--gui", action="store_true", help="Run the GUI")
+    parser.add_argument("--config", default="config/optimization_config.json", help="Path to configuration file")
+    parser.add_argument("--mode", choices=["all", "robot", "symbol"], default="all", help="Optimization mode")
+    parser.add_argument("--robot", help="Name of the robot to optimize (for robot and symbol modes)")
+    parser.add_argument("--symbol", help="Symbol to optimize (for symbol mode)")
+    parser.add_argument("--timeframe", help="Timeframe to optimize (for symbol mode)")
     
-    # Create output directory if it doesn't exist
-    os.makedirs(args.output_dir, exist_ok=True)
+    # Analysis arguments
+    parser.add_argument("--analysis", action="store_true", help="Run analysis")
+    parser.add_argument("--results_dir", default="results", help="Path to results directory")
+    parser.add_argument("--period_name", help="Name of the period")
+    parser.add_argument("--period_type", choices=["backtest", "forwardtest"], default="backtest", help="Type of the period")
+    parser.add_argument("--action", choices=["analyze", "report"], default="analyze", help="Analysis action")
+    parser.add_argument("--max_drawdown", type=float, default=25.0, help="Maximum drawdown")
+    parser.add_argument("--min_profit_factor", type=float, default=1.5, help="Minimum profit factor")
+    parser.add_argument("--min_expected_payoff", type=float, default=10.0, help="Minimum expected payoff")
+    parser.add_argument("--min_recovery_factor", type=float, default=1.0, help="Minimum recovery factor")
+    parser.add_argument("--min_trades", type=int, default=30, help="Minimum number of trades")
+    parser.add_argument("--max_consecutive_losses", type=int, default=5, help="Maximum consecutive losses")
+    parser.add_argument("--min_win_rate", type=float, default=50.0, help="Minimum win rate")
     
-    # Run processes based on mode
-    optimization_results = None
-    analysis_results = None
+    args = parser.parse_args()
     
-    if args.mode in ["optimize", "both"]:
-        optimization_results = run_optimization(
-            config_path=args.config,
-            robot_name=args.robot,
-            symbol=args.symbol,
-            timeframe=args.timeframe,
-            period_name=args.period
-        )
-    
-    if args.mode in ["analyze", "both"]:
-        analysis_results = run_analysis(
-            config_path=args.config,
-            output_dir=args.output_dir,
-            robot_name=args.robot,
-            symbol=args.symbol,
-            timeframe=args.timeframe,
-            period_name=args.period,
-            generate_report=args.report
-        )
-    
-    # Record end time and calculate duration
-    end_time = datetime.now()
-    duration = end_time - start_time
-    
-    # Print summary
-    logger.info(f"MT5 Automatic Optimizer completed at {end_time}")
-    logger.info(f"Total duration: {duration}")
-    
-    if optimization_results:
-        logger.info(f"Optimization status: {optimization_results['status']}")
-    
-    if analysis_results:
-        logger.info(f"Analysis status: {analysis_results['status']}")
-        
-        if args.report and analysis_results.get("report_path"):
-            logger.info(f"Analysis report: {analysis_results['report_path']}")
-    
-    return 0
+    # Run the appropriate mode
+    if args.gui:
+        # Run the GUI
+        run_gui()
+    elif args.analysis:
+        # Run analysis
+        run_analysis(args)
+    else:
+        # Run the CLI
+        run_cli(args)
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

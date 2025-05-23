@@ -1,237 +1,264 @@
 """
 MT5 Launcher Module
 
-This module provides functionality to launch MetaTrader 5 terminal and control it
-for automated optimization of Expert Advisors.
+This module provides functionality to launch and control MetaTrader 5.
 """
 
 import os
+import sys
 import time
-import subprocess
-import json
 import logging
-import shutil
+import subprocess
+import psutil
 from pathlib import Path
 
+# Import INI Generator
+from optim.ini_generator import INIGenerator
+
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("mt5_optimizer.log"),
-        logging.StreamHandler()
-    ]
-)
 logger = logging.getLogger("MT5Launcher")
 
 class MT5Launcher:
     """
-    Class to launch and control MetaTrader 5 terminal for automated optimization.
+    Class to launch and control MetaTrader 5.
     """
     
-    def __init__(self, mt5_path, output_directory="results"):
+    def __init__(self, mt5_path, output_dir):
         """
-        Initialize the MT5Launcher with the path to MT5 terminal.
+        Initialize the MT5 launcher.
         
         Args:
-            mt5_path (str): Path to the MT5 terminal executable
-            output_directory (str): Directory to store optimization results
+            mt5_path (str): Path to the MT5 executable
+            output_dir (str): Directory to store output files
         """
         self.mt5_path = mt5_path
-        self.output_directory = output_directory
-        self.process = None
+        self.output_dir = output_dir
+        self.mt5_process = None
         
-        # Ensure output directory exists
-        os.makedirs(output_directory, exist_ok=True)
+        # Create output directory if it doesn't exist
+        os.makedirs(output_dir, exist_ok=True)
         
-        logger.info(f"MT5Launcher initialized with MT5 path: {mt5_path}")
-        logger.info(f"Results will be stored in: {output_directory}")
+        logger.info(f"MT5 Launcher initialized with MT5 path: {mt5_path}")
     
     def launch_mt5(self):
         """
-        Launch the MT5 terminal.
+        Launch MT5.
         
         Returns:
             bool: True if MT5 was launched successfully, False otherwise
         """
         try:
-            logger.info(f"Launching MT5 from: {self.mt5_path}")
+            # Check if MT5 is already running
+            if self.is_mt5_running():
+                logger.info("MT5 is already running")
+                return True
             
-            # Launch MT5 with /portable flag to avoid conflicts with other instances
-            self.process = subprocess.Popen([self.mt5_path, "/portable"], 
-                                           stdout=subprocess.PIPE, 
-                                           stderr=subprocess.PIPE)
+            # Launch MT5
+            logger.info(f"Launching MT5 from {self.mt5_path}")
+            self.mt5_process = subprocess.Popen([self.mt5_path])
             
-            # Wait for MT5 to initialize
-            time.sleep(10)
+            # Wait for MT5 to start
+            time.sleep(5)
             
-            # Check if process is still running
-            if self.process.poll() is None:
+            # Check if MT5 is running
+            if self.is_mt5_running():
                 logger.info("MT5 launched successfully")
                 return True
             else:
-                stdout, stderr = self.process.communicate()
-                logger.error(f"MT5 failed to start. Exit code: {self.process.returncode}")
-                logger.error(f"STDOUT: {stdout.decode('utf-8', errors='ignore')}")
-                logger.error(f"STDERR: {stderr.decode('utf-8', errors='ignore')}")
+                logger.error("Failed to launch MT5")
                 return False
-                
         except Exception as e:
             logger.error(f"Error launching MT5: {str(e)}")
             return False
     
     def close_mt5(self):
         """
-        Close the MT5 terminal.
+        Close MT5.
         
         Returns:
             bool: True if MT5 was closed successfully, False otherwise
         """
         try:
-            if self.process and self.process.poll() is None:
-                logger.info("Closing MT5")
-                
-                # Try graceful termination first
-                self.process.terminate()
-                
-                # Wait for process to terminate
-                try:
-                    self.process.wait(timeout=10)
-                except subprocess.TimeoutExpired:
-                    # Force kill if termination takes too long
-                    logger.warning("MT5 did not terminate gracefully, forcing kill")
-                    self.process.kill()
-                    self.process.wait()
-                
+            # Check if MT5 is running
+            if not self.is_mt5_running():
+                logger.info("MT5 is not running")
+                return True
+            
+            # Close MT5
+            logger.info("Closing MT5")
+            for proc in psutil.process_iter(['pid', 'name']):
+                if 'terminal64.exe' in proc.info['name'].lower():
+                    logger.info(f"Terminating MT5 process with PID {proc.info['pid']}")
+                    proc.terminate()
+            
+            # Wait for MT5 to close
+            time.sleep(5)
+            
+            # Check if MT5 is still running
+            if not self.is_mt5_running():
                 logger.info("MT5 closed successfully")
                 return True
             else:
-                logger.warning("MT5 is not running, nothing to close")
-                return True
-                
+                logger.error("Failed to close MT5")
+                return False
         except Exception as e:
             logger.error(f"Error closing MT5: {str(e)}")
             return False
     
-    def run_optimization(self, robot_name, set_file, symbol, timeframe, 
-                        from_date, to_date, leverage=100, model=1, 
-                        initial_deposit=10000, optimization_type="genetic",
-                        period_name="Default", period_type="backtest"):
+    def is_mt5_running(self):
         """
-        Run an optimization for a specific EA with the given parameters.
+        Check if MT5 is running.
         
-        Args:
-            robot_name (str): Name of the Expert Advisor
-            set_file (str): Path to the .set file with optimization parameters
-            symbol (str): Symbol to optimize on (e.g., "EURUSD")
-            timeframe (str): Timeframe to optimize on (e.g., "H1", "D1")
-            from_date (str): Start date for optimization in format "YYYY.MM.DD"
-            to_date (str): End date for optimization in format "YYYY.MM.DD"
-            leverage (int): Leverage to use for optimization
-            model (int): Modeling quality (0-control points, 1-OHLC, 2-every tick)
-            initial_deposit (int): Initial deposit for optimization
-            optimization_type (str): Type of optimization ("genetic" or "complete")
-            period_name (str): Name of the period for result organization
-            period_type (str): Type of the period ("backtest" or "forwardtest")
-            
         Returns:
-            bool: True if optimization was run successfully, False otherwise
+            bool: True if MT5 is running, False otherwise
         """
         try:
-            # Create directory for results
-            result_dir = os.path.join(self.output_directory, f"{symbol}_{timeframe}_{period_name}")
-            os.makedirs(result_dir, exist_ok=True)
+            for proc in psutil.process_iter(['pid', 'name']):
+                if 'terminal64.exe' in proc.info['name'].lower():
+                    return True
+            return False
+        except Exception as e:
+            logger.error(f"Error checking if MT5 is running: {str(e)}")
+            return False
+    
+    def run_optimization(self, robot_name, symbol, timeframe, period, optimization_type="genetic", leverage=500, model=1, initial_deposit=10000, set_file=None):
+        """
+        Run an optimization.
+        
+        Args:
+            robot_name (str): Name of the robot
+            symbol (str): Symbol to optimize
+            timeframe (str): Timeframe to optimize
+            period (dict): Period to optimize (name, type, from_date, to_date)
+            optimization_type (str or int, optional): Type of optimization. Defaults to "genetic".
+                1 = Slow complete algorithm
+                2 = Fast genetic based algorithm
+                3 = All symbols selected in Market Watch
+            leverage (int, optional): Leverage. Defaults to 500.
+            model (int, optional): Model. Defaults to 1.
+                0 = Every tick
+                1 = Control points
+                2 = Open prices only
+            initial_deposit (int, optional): Initial deposit. Defaults to 10000.
+            set_file (str, optional): Path to the .set file. Defaults to None.
+        
+        Returns:
+            dict: Results of the optimization
+        """
+        try:
+            # Check if MT5 is running
+            if not self.is_mt5_running():
+                logger.info("MT5 is not running, launching it")
+                if not self.launch_mt5():
+                    return {"status": "error", "message": "Failed to launch MT5"}
             
-            logger.info(f"Running optimization for {robot_name} on {symbol} {timeframe}")
-            logger.info(f"Period: {from_date} to {to_date} ({period_type})")
+            # Create output directory
+            robot_base_name = os.path.basename(robot_name).replace(".ex5", "")
+            output_dir = os.path.join(self.output_dir, f"{robot_base_name}_{symbol}_{timeframe}_{period['name']}_{period['type']}")
+            os.makedirs(output_dir, exist_ok=True)
             
-            # Construct command line arguments for MT5
-            # Note: This is a simplified version. In reality, you would need to use
-            # MT5's command line interface or automate through its UI
+            # Convert optimization_type to string if it's an integer
+            opt_type_str = str(optimization_type)
+            if optimization_type == 1 or optimization_type == "1":
+                opt_type_str = "Slow complete algorithm"
+            elif optimization_type == 2 or optimization_type == "2":
+                opt_type_str = "Fast genetic based algorithm"
+            elif optimization_type == 3 or optimization_type == "3":
+                opt_type_str = "All symbols selected in Market Watch"
             
-            # For demonstration purposes, we'll just simulate the optimization process
-            logger.info("Simulating optimization process...")
-            time.sleep(5)  # Simulate optimization running
+            # Convert model to string
+            model_str = str(model)
+            if model == 0 or model == "0":
+                model_str = "Every tick"
+            elif model == 1 or model == "1":
+                model_str = "Control points"
+            elif model == 2 or model == "2":
+                model_str = "Open prices only"
             
-            # In a real implementation, you would:
-            # 1. Use MT5's command line parameters or
-            # 2. Use UI automation libraries like pyautogui or pywinauto to control MT5
-            # 3. Monitor the optimization progress
-            # 4. Extract results when complete
+            # Prepare the command to launch MT5 with optimization parameters
+            # We'll use the /config parameter to pass optimization settings
             
-            # Simulate creating result files
-            with open(os.path.join(result_dir, f"{robot_name}_{period_type}_results.csv"), "w") as f:
-                f.write(f"Simulated optimization results for {robot_name} on {symbol} {timeframe}\n")
-                f.write(f"Period: {from_date} to {to_date}\n")
-                f.write("Pass,Profit,Drawdown,Trades,Win%,Parameters...\n")
-                f.write("1,1000,150,50,65,param1=10,param2=20\n")
-                f.write("2,1200,180,55,68,param1=12,param2=18\n")
+            # Create a temporary .ini file for the optimization
+            ini_file = os.path.join(output_dir, "optimization.ini")
             
-            logger.info(f"Optimization completed. Results saved to {result_dir}")
-            return True
+            # Generate the .ini file using INIGenerator
+            is_forward = period['type'] == 'forwardtest'
+            report_file = os.path.join(output_dir, f"report_{robot_base_name}_{symbol}_{timeframe}_{period['name']}_{period['type']}")
             
+            ini_file = INIGenerator.generate_optimization_ini(
+                output_path=ini_file,
+                robot_name=robot_name,
+                symbol=symbol,
+                timeframe=timeframe,
+                from_date=period['from_date'],
+                to_date=period['to_date'],
+                is_forward=is_forward,
+                optimization_type=optimization_type,
+                model=model,
+                deposit=initial_deposit,
+                leverage=leverage,
+                set_file=set_file,
+                report_file=report_file
+            )
+            
+            if not ini_file:
+                return {"status": "error", "message": "Failed to generate .ini file"}
+            
+            # Close MT5 if it's running
+            if self.is_mt5_running():
+                logger.info("Closing MT5 before launching optimization")
+                self.close_mt5()
+                time.sleep(2)
+            
+            # Launch MT5 with the optimization configuration
+            cmd = [self.mt5_path, "/config:" + ini_file]
+            logger.info(f"Running optimization for robot {robot_name}, symbol {symbol}, timeframe {timeframe}, period {period['name']} ({period['type']})")
+            logger.info(f"Command: {' '.join(cmd)}")
+            
+            # Launch MT5 with optimization
+            process = subprocess.Popen(cmd)
+            
+            # Wait for MT5 to start
+            time.sleep(10)
+            
+            # Wait for optimization to complete
+            # In a real implementation, you would need to monitor MT5 to determine when the optimization is complete
+            # For now, we'll just wait for a fixed amount of time
+            optimization_time = 300  # seconds (5 minutes)
+            logger.info(f"Waiting {optimization_time} seconds for optimization to complete...")
+            time.sleep(optimization_time)
+            
+            # Wait for MT5 to close automatically (ShutdownTerminal=1 in .ini file)
+            # If it doesn't close automatically, close it manually
+            close_wait_time = 60  # seconds
+            logger.info(f"Waiting {close_wait_time} seconds for MT5 to close automatically...")
+            time.sleep(close_wait_time)
+            
+            # Close MT5 after optimization if it's still running
+            if self.is_mt5_running():
+                logger.info("MT5 is still running, closing it manually")
+                self.close_mt5()
+            
+            # Check for results files
+            results_files = []
+            for ext in ['.xml', '.html', '.csv', '.txt']:
+                results_files.extend(list(Path(output_dir).glob(f"*{ext}")))
+            
+            if not results_files:
+                logger.warning(f"No results files found in {output_dir}")
+            else:
+                logger.info(f"Found {len(results_files)} results files in {output_dir}")
+            
+            # Return results
+            return {
+                "status": "success",
+                "robot_name": robot_name,
+                "symbol": symbol,
+                "timeframe": timeframe,
+                "period": period,
+                "output_dir": output_dir,
+                "results_files": [str(f) for f in results_files]
+            }
         except Exception as e:
             logger.error(f"Error running optimization: {str(e)}")
-            return False
-
-    def copy_set_file(self, set_file, destination_dir):
-        """
-        Copy the .set file to the destination directory.
-        
-        Args:
-            set_file (str): Path to the .set file
-            destination_dir (str): Destination directory
-            
-        Returns:
-            str: Path to the copied .set file or None if failed
-        """
-        try:
-            if not os.path.exists(set_file):
-                logger.error(f"SET file not found: {set_file}")
-                return None
-                
-            os.makedirs(destination_dir, exist_ok=True)
-            destination = os.path.join(destination_dir, os.path.basename(set_file))
-            shutil.copy2(set_file, destination)
-            
-            logger.info(f"Copied SET file to {destination}")
-            return destination
-            
-        except Exception as e:
-            logger.error(f"Error copying SET file: {str(e)}")
-            return None
-
-
-# Example usage
-if __name__ == "__main__":
-    # Load configuration
-    with open("../config/optimization_config.json", "r") as f:
-        config = json.load(f)
-    
-    # Initialize launcher
-    launcher = MT5Launcher(config["mt5_path"], config["output_directory"])
-    
-    # Launch MT5
-    if launcher.launch_mt5():
-        # Run a sample optimization
-        robot = config["robots"][0]
-        optim = robot["optimizations"][0]
-        period = optim["periods"][0]
-        
-        launcher.run_optimization(
-            robot_name=robot["name"],
-            set_file=robot["set_file"],
-            symbol=optim["symbol"],
-            timeframe=optim["timeframe"],
-            from_date=period["from_date"],
-            to_date=period["to_date"],
-            leverage=optim["leverage"],
-            model=optim["model"],
-            initial_deposit=optim["initial_deposit"],
-            optimization_type=optim["optimization_type"],
-            period_name=period["name"],
-            period_type=period["type"]
-        )
-        
-        # Close MT5
-        launcher.close_mt5()
+            return {"status": "error", "message": str(e)}

@@ -1,103 +1,158 @@
 {
-    "mt5_path": "C:\\Program Files\\IC Trading (MU) MT5 Terminal\\terminal64.exe",
-    "robots": [
+  "mt5_path": "C:\\Program Files\\IC Trading (MU) MT5 Terminal\\terminal64.exe",
+  "output_directory": "results_AUDCAD_H1_BARCELONE",
+  "robots": [
+    {
+      "name": "C:\\Users\\MARRE\\AppData\\Roaming\\MetaQuotes\\Terminal\\6F6BCEE8A3D5ADA99D9E5E615679D93C\\MQL5\\Experts\\REB RSI-Break.ex5",
+      "set_file": "C:\\Users\\MARRE\\Desktop\\Reussir-en-bourse\\Robots\\REB-RSI Break\\Fichiers De Parametrage Paul\\AUDCAD_H1_optim.set",
+      "optimizations": [
         {
-            "name": "Example_EA",
-            "set_file": "Example_EA.set",
-            "optimizations": [
-                {
-                    "symbol": "EURUSD",
-                    "timeframe": "H1",
-                    "leverage": 100,
-                    "model": 1,
-                    "initial_deposit": 10000,
-                    "optimization_type": "genetic",
-                    "periods": [
-                        {
-                            "name": "Short_Term_Backtest",
-                            "from_date": "2023.01.01",
-                            "to_date": "2023.06.30",
-                            "type": "backtest"
-                        },
-                        {
-                            "name": "Short_Term_Forwardtest",
-                            "from_date": "2023.07.01",
-                            "to_date": "2023.12.31",
-                            "type": "forwardtest"
-                        },
-                        {
-                            "name": "Long_Term_Backtest",
-                            "from_date": "2020.01.01",
-                            "to_date": "2022.12.31",
-                            "type": "backtest"
-                        },
-                        {
-                            "name": "Long_Term_Forwardtest",
-                            "from_date": "2023.01.01",
-                            "to_date": "2023.12.31",
-                            "type": "forwardtest"
-                        }
-                    ]
-                },
-                {
-                    "symbol": "GBPUSD",
-                    "timeframe": "H4",
-                    "leverage": 100,
-                    "model": 1,
-                    "initial_deposit": 10000,
-                    "optimization_type": "complete",
-                    "periods": [
-                        {
-                            "name": "Short_Term_Backtest",
-                            "from_date": "2023.01.01",
-                            "to_date": "2023.06.30",
-                            "type": "backtest"
-                        },
-                        {
-                            "name": "Short_Term_Forwardtest",
-                            "from_date": "2023.07.01",
-                            "to_date": "2023.12.31",
-                            "type": "forwardtest"
-                        }
-                    ]
-                }
-            ]
+          "symbol": "AUDCAD",
+          "timeframe": "H1",
+          "leverage": 500,
+          "model": 2,
+          "initial_deposit": 5000,
+          "optimization_type": 2,
+          "periods": [
+            {
+              "name": "shortterm",
+              "type": "backtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.06.30"
+            },
+            {
+              "name": "shortterm",
+              "type": "forwardtest",
+              "from_date": "2023.07.01",
+              "to_date": "2023.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "backtest",
+              "from_date": "2020.01.01",
+              "to_date": "2022.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "forwardtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.12.31"
+            }
+          ]
         },
         {
-            "name": "Another_EA",
-            "set_file": "Another_EA.set",
-            "optimizations": [
-                {
-                    "symbol": "USDJPY",
-                    "timeframe": "D1",
-                    "leverage": 50,
-                    "model": 0,
-                    "initial_deposit": 5000,
-                    "optimization_type": "genetic",
-                    "periods": [
-                        {
-                            "name": "Medium_Term_Backtest",
-                            "from_date": "2022.01.01",
-                            "to_date": "2022.12.31",
-                            "type": "backtest"
-                        },
-                        {
-                            "name": "Medium_Term_Forwardtest",
-                            "from_date": "2023.01.01",
-                            "to_date": "2023.06.30",
-                            "type": "forwardtest"
-                        }
-                    ]
-                }
-            ]
+          "symbol": "EURUSD",
+          "timeframe": "H4",
+          "leverage": 500,
+          "model": 2,
+          "initial_deposit": 5000,
+          "optimization_type": 1,
+          "periods": [
+            {
+              "name": "shortterm",
+              "type": "backtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.06.30"
+            },
+            {
+              "name": "shortterm",
+              "type": "forwardtest",
+              "from_date": "2023.07.01",
+              "to_date": "2023.12.31"
+            }
+          ]
+        },
+        {
+          "symbol": "GBPUSD",
+          "timeframe": "H1",
+          "leverage": 500,
+          "model": 2,
+          "initial_deposit": 5000,
+          "optimization_type": 1,
+          "periods": [
+            {
+              "name": "shortterm",
+              "type": "backtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.06.30"
+            }
+          ]
         }
-    ],
-    "output_directory": "results",
-    "analysis_criteria": {
-        "max_drawdown_percent": 25,
-        "min_profit_factor": 1.5,
-        "min_expected_payoff": 10,
-        "min_recovery_factor": 1.0,
-        "min_sharpe_ratio": 0.5
+      ]
+    },
+    {
+      "name": "C:\\Users\\MARRE\\AppData\\Roaming\\MetaQuotes\\Terminal\\6F6BCEE8A3D5ADA99D9E5E615679D93C\\MQL5\\Experts\\REB Ichimoku-Bot.ex5",
+      "set_file": "C:\\Users\\MARRE\\Desktop\\Reussir-en-bourse\\Robots\\REB-Ichimoku Bot\\Fichiers De Parametrage Paul\\MADRIDMT5\\Ichimoku-AUDCAD-M15.set",
+      "optimizations": [
+        {
+          "symbol": "EURUSD",
+          "timeframe": "H1",
+          "leverage": 500,
+          "model": 2,
+          "initial_deposit": 5000,
+          "optimization_type": 1,
+          "periods": [
+            {
+              "name": "shortterm",
+              "type": "backtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.06.30"
+            },
+            {
+              "name": "shortterm",
+              "type": "forwardtest",
+              "from_date": "2023.07.01",
+              "to_date": "2023.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "backtest",
+              "from_date": "2020.01.01",
+              "to_date": "2022.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "forwardtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.12.31"
+            }
+          ]
+        },
+        {
+          "symbol": "USDJPY",
+          "timeframe": "H1",
+          "leverage": 500,
+          "model": 2,
+          "initial_deposit": 5000,
+          "optimization_type": 1,
+          "periods": [
+            {
+              "name": "shortterm",
+              "type": "backtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.06.30"
+            },
+            {
+              "name": "shortterm",
+              "type": "forwardtest",
+              "from_date": "2023.07.01",
+              "to_date": "2023.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "backtest",
+              "from_date": "2020.01.01",
+              "to_date": "2022.12.31"
+            },
+            {
+              "name": "longterm",
+              "type": "forwardtest",
+              "from_date": "2023.01.01",
+              "to_date": "2023.12.31"
+            }
+          ]
+        }
+      ]
     }
+  ]
 }
