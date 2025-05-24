@@ -20,7 +20,7 @@ class INIGenerator:
     
     @staticmethod
     def generate_optimization_ini(output_path, robot_name, symbol, timeframe, from_date, to_date, 
-                                 is_forward=False, optimization_type=2, model=2, deposit=5000, 
+                                 is_forward=False, optimization_type=2, optimization_criterion=3,model=2, deposit=5000, 
                                  leverage=500, set_file=None, report_file=None):
         """
         Generate an .ini file for MT5 optimization.
@@ -57,26 +57,19 @@ class INIGenerator:
             robot_base_name = os.path.basename(robot_name).replace(".ex5", "")
             
             # Create the .ini file content following the MT5 template format
-            ini_content = f"""
-;+------------------------------------------------------------------------------+
-;| Start Expert Advisor testing or optimization                                 |
-;+------------------------------------------------------------------------------+
-
-[Tester]
+            ini_content = f"""[Tester]
 Expert={robot_name}
 Symbol={symbol}
 Period={timeframe}
-Optimization=1
+Optimization={optimization_type}
 Model={model}
 FromDate={from_date}
 ToDate={to_date}
-ForwardMode={(1 if is_forward else 0)}
+ForwardMode={(2 if is_forward else 0)}
 Deposit={deposit}
 Leverage=1:{leverage}
-OptimizationCriterion=0
-ExecutionMode={optimization_type}
-"""
-            
+OptimizationCriterion={optimization_criterion}
+"""      
             # Add report file if provided
             if report_file:
                 report_name = os.path.basename(report_file).replace(".html", "")
@@ -86,12 +79,25 @@ ExecutionMode={optimization_type}
             # Add shutdown terminal option (1 = shutdown, 0 = keep running)
             ini_content += "ShutdownTerminal=1\n"
             
-            # Note: We're removing the [TesterInputs] section as requested by the user
-            # The parameters will be handled directly by MT5 from the .set file
-            
-            # Write the .ini file
-            with open(output_path, 'w') as f:
-                f.write(ini_content)
+            import chardet
+            # [TesterInputs]
+            if set_file and os.path.isfile(set_file):
+                ini_content += "[TesterInputs]\n"
+                # Detect file encoding
+                with open(set_file, "rb") as f:
+                    raw_data = f.read()
+                    detected_encoding = chardet.detect(raw_data)["encoding"]
+
+                # Read file using detected encoding
+                with open(set_file, "r", encoding=detected_encoding) as f:
+                    for line in f:
+                        line = line.strip()
+                        if line and not line.startswith(";"):
+                            ini_content += line + "\n"
+                            
+                            # Write the .ini file
+                            with open(output_path, 'w') as f:
+                                f.write(ini_content)
             
             logger.info(f"Generated optimization .ini file at {output_path}")
             

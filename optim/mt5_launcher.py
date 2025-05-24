@@ -10,6 +10,7 @@ import time
 import logging
 import subprocess
 import psutil
+import shutil
 from pathlib import Path
 
 # Import INI Generator
@@ -121,7 +122,7 @@ class MT5Launcher:
             logger.error(f"Error checking if MT5 is running: {str(e)}")
             return False
     
-    def run_optimization(self, robot_name, symbol, timeframe, period, optimization_type="genetic", leverage=500, model=1, initial_deposit=10000, set_file=None):
+    def run_optimization(self, robot_name, symbol, timeframe, period, optimization_type="genetic", optimization_criterion = 3, leverage=500, model=1, initial_deposit=10000, set_file=None):
         """
         Run an optimization.
         
@@ -179,10 +180,15 @@ class MT5Launcher:
             # We'll use the /config parameter to pass optimization settings
             
             # Create a temporary .ini file for the optimization
-            ini_file = os.path.join(output_dir, "optimization.ini")
+            ini_dir = os.path.join(self.output_dir, "ini")
+            os.makedirs(ini_dir, exist_ok=True)
+            
+            # Build the .ini file name
+            ini_file_name = f"{robot_base_name}_{symbol}_{timeframe}_{period['from_date']}_{period['to_date']}.ini"
+            ini_file = os.path.join(ini_dir, ini_file_name)
             
             # Generate the .ini file using INIGenerator
-            is_forward = period['type'] == 'forwardtest'
+            is_forward = True  # Set to False if you want to run a forward test
             report_file = os.path.join(output_dir, f"report_{robot_base_name}_{symbol}_{timeframe}_{period['name']}_{period['type']}")
             
             ini_file = INIGenerator.generate_optimization_ini(
@@ -194,6 +200,7 @@ class MT5Launcher:
                 to_date=period['to_date'],
                 is_forward=is_forward,
                 optimization_type=optimization_type,
+                optimization_criterion=optimization_criterion,
                 model=model,
                 deposit=initial_deposit,
                 leverage=leverage,
@@ -221,13 +228,6 @@ class MT5Launcher:
             # Wait for MT5 to start
             time.sleep(10)
             
-            # Wait for optimization to complete
-            # In a real implementation, you would need to monitor MT5 to determine when the optimization is complete
-            # For now, we'll just wait for a fixed amount of time
-            optimization_time = 300  # seconds (5 minutes)
-            logger.info(f"Waiting {optimization_time} seconds for optimization to complete...")
-            time.sleep(optimization_time)
-            
             # Wait for MT5 to close automatically (ShutdownTerminal=1 in .ini file)
             # If it doesn't close automatically, close it manually
             close_wait_time = 60  # seconds
@@ -248,6 +248,20 @@ class MT5Launcher:
                 logger.warning(f"No results files found in {output_dir}")
             else:
                 logger.info(f"Found {len(results_files)} results files in {output_dir}")
+            
+            # Copier les résultats de MT5 vers le dossier de résultats personnalisé
+            mt5_results_dir = "C:\\Users\\MARRE\\AppData\\Roaming\\MetaQuotes\\Terminal\\6F6BCEE8A3D5ADA99D9E5E615679D93C"
+            destination_dir = output_dir  # Utilisez le dossier de sortie déjà créé pour cette optimisation
+
+            try:
+                # Vérifiez si le répertoire MT5 contient des fichiers de résultats
+                for file_extension in ['*.xml', '*.html', '*.csv', '*.txt']:
+                    for result_file in Path(mt5_results_dir).glob(file_extension):
+                        # Copier chaque fichier dans le dossier de destination
+                        shutil.copy(result_file, destination_dir)
+                        logger.info(f"Copied {result_file} to {destination_dir}")
+            except Exception as e:
+                logger.error(f"Error copying results: {str(e)}")
             
             # Return results
             return {

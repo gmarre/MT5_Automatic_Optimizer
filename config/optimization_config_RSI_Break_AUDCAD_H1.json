@@ -3,7 +3,7 @@
     "output_directory": "results_AUDCAD_H1_BARCELONE",
     "robots": [
       {
-        "name": "C:\\Users\\MARRE\\AppData\\Roaming\\MetaQuotes\\Terminal\\6F6BCEE8A3D5ADA99D9E5E615679D93C\\MQL5\\Experts\\REB RSI-Break.ex5",
+        "name": "REB RSI-Break.ex5",
         "set_file": "C:\\Users\\MARRE\\Desktop\\Reussir-en-bourse\\Robots\\REB-RSI Break\\Fichiers De Parametrage Paul\\AUDCAD_H1_optim.set",
         "optimizations": [
           {
@@ -13,6 +13,7 @@
             "model": 2,
             "initial_deposit": 5000,
             "optimization_type": 2,
+            "optimization_criterion":3,
             "periods": [
               {
                 "name": "shortterm",
